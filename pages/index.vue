@@ -5,8 +5,9 @@
             <div class="row align-items-center g-0">
                 <div class="col-xl-5 col-lg-6 col-md-12">
                     <div class="py-7 py-lg-0">
+
                         <h1 class="text-primary-emphasis display-4 fw-bold">Ikamvelihle Youth Development</h1>
-                        <p class="text-dark mb-4 lead">Kamvelihle youth development : Empowering Youth for a Better Future</p>
+                        <p class="text-dark mb-4 lead"><span class="headingTyped"></span></p>
 
                     </div>
                 </div>
@@ -16,8 +17,8 @@
             </div>
         </div>
     </section>
-    <section class="bg-gradient py-4 shadow-sm">
-        <div class="container">
+    <section class="bg-white-gradient py-4 smooth-shadow-lg">
+        <div class="container ">
             <div class="row align-items-center g-0">
                 <!-- Features -->
                 <div class="col-xl-4 col-lg-4 col-md-6 mb-lg-0 mb-4">
@@ -98,7 +99,7 @@
                 <div class="row">
 
                     <!-- controls -->
-                    <swiper :slidesPerView="3" :autoplay="{ delay: 1500, disableOnInteraction: false, }" :centeredSlides="true" :spaceBetween="30" :freeMode="true" :pagination="{ clickable: true }" :modules="modules">
+                    <swiper :slidesPerView="3" :autoplay="{ delay: 1500, disableOnInteraction: false, }" :spaceBetween="30" :freeMode="true" :pagination="{ clickable: true }" :modules="modules">
                         <swiper-slide>
                             <div class="col-md-12">
                                 <!-- card -->
@@ -263,22 +264,27 @@ import { Autoplay, FreeMode, Pagination } from 'swiper/modules';
 import "swiper/css";
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
-
+import { onMounted } from "vue";
 export default {
     components: {
         Swiper,
         SwiperSlide,
     },
     setup() {
-
+        useHead({
+            title: "KYD | Home"
+        })
         definePageMeta({
             layout: "site",
         });
+        onMounted(() => {
+            if ($(".headingTyped").length) new Typed(".headingTyped", { strings: ["Empowering Youth for a Better Future"], typeSpeed: 40, backSpeed: 40, backDelay: 1e3, loop: !0 });
+        })
 
         return {
-
             modules: [Autoplay, FreeMode, Pagination],
         };
     },
 };
+
 </script>

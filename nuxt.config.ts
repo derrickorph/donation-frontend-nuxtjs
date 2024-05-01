@@ -1,6 +1,30 @@
+import { defineNuxtConfig } from "nuxt/config";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  modules: ["@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt", [
+      "@vee-validate/nuxt",
+      {
+        // disable or enable auto imports
+        autoImports: true,
+        // Use different names for components
+        componentNames: {
+          Form: 'VeeForm',
+          Field: 'VeeField',
+          FieldArray: 'VeeFieldArray',
+          ErrorMessage: 'VeeErrorMessage',
+        },
+      },
+    ],
+  ],
+  
+  imports: {
+    dirs: ["./stores"],
+  },
+  pinia: {
+    autoImports: ["defineStore", ["defineStore", "definePiniaStore"]],
+  },
   alias: {
     assets: "/<rootDir>/assets",
   },
@@ -44,6 +68,10 @@ export default defineNuxtConfig({
         },
       ],
       script: [
+        {
+          src: "/assets/libs/typed.js/dist/typed.umd.js",
+          type: "text/javascript",
+        },
         {
           src: "/assets/libs/jquery/dist/jquery.min.js",
           type: "text/javascript",

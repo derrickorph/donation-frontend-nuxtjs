@@ -1,20 +1,26 @@
 <template>
+    <section class="container-fluid p-4">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-12">
+                <div class="border-bottom pb-3 mb-3 d-lg-flex justify-content-between align-items-center">
+                    <div class="mb-3 mb-lg-0">
+                        <h1 class="mb-0 h2 fw-bold">Blocked users list</h1>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
     <!-- Start Content-->
     <div class="container-fluid">
 
         <div class="row">
-            <div class="col-12">
-                <div class="page-title-box">
-                    <h4 class="page-title">Blocked users list</h4>
-                </div>
-            </div>
+
             <div class="col-md-12">
                 <div class="card">
-                    <!-- <div class="card-header">
-                        <button class="btn btn-sm btn-primary">Add user <i class=" uil-user-plus"></i></button>
-                    </div> -->
+
                     <div class="card-body">
-                        <DataTable :options="datatableOptions" class=" table table-striped table-sm table-bordered">
+                        <DataTable v-if="!loader" :options="datatableOptions" class=" table table-striped table-sm table-bordered">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -36,11 +42,11 @@
                                     <td>{{ user.email }}</td>
                                     <td>{{ user.phoneNumber }}</td>
                                     <td>
-                                        <span class="badge bg-danger-lighten text-danger">Disabled</span>
+                                        <span class="badge rounded-pill text-bg-danger">Disabled</span>
                                     </td>
 
                                     <td class="text-center">
-                                        <button class="btn btn-sm btn-success rounded"><i class="uil-user-check"></i></button>
+                                        <button @click="toogleIsActive(user.id)" class="btn btn-xs btn-success btn-icon rounded-circle"><i class="bi bi-person-check"></i></button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -58,28 +64,27 @@
 <script setup>
 import DataTable from 'datatables.net-vue3'
 import DataTablesCore from 'datatables.net-bs5';
+import useUsers from '../../services/userService'
+import { onMounted } from "vue";
+import Swal from "sweetalert2";
+
+
+useHead({
+    title: "KYD | Blocked User List"
+})
 
 definePageMeta({
     layout: 'admin',
-    head() {
-        return {
-            script: [
-                {
-                    src: '/assets/js/app.min.js'
-                }
-            ]
-        }
-    },
+    middleware: ['auth']
 })
+
+const { users, loader, userProcess, getListeBlockedUsers, changeStatus } = useUsers()
 DataTable.use(DataTablesCore);
 
-const users = [{
-    username: 'derrick19',
-    surname: 'Bryan J. Luellen',
-    id_number: '1552850255555',
-    email: 'collier@jourrapide.com',
-    phoneNumber: '(+1)628 682 286585',
-}];
+onMounted(async () => {
+    await getListeBlockedUsers()
+    if (!loader.value) $('.pagination').addClass("pagination-sm pagination-rounded")
+})
 const datatableOptions = {
     pagingType: "simple_numbers",
     processing: true,
@@ -91,12 +96,52 @@ const datatableOptions = {
     lengthMenu: [5, 10, 25, 50, 100],
     pageLength: 5,
     drawCallback: function () {
-        $(".dt-paging-button").addClass("pagination-rounded");
+        $('.pagination').addClass("pagination-sm pagination-rounded")
     },
 
 };
+
+const toogleIsActive = (id) => {
+    try {
+        Swal.fire({
+            title: 'Approval',
+            text: 'Do you want to unblock this user?',
+            showCancelButton: true,
+            icon: 'info',
+            customClass: {
+                cancelButton: 'btn btn-danger btn-sm ',
+                confirmButton: 'btn btn-success btn-sm ms-2',
+            },
+            confirmButtonText: 'Confirm',
+            buttonsStyling: false,
+            cancelButtonText: 'Cancel',
+            reverseButtons: true
+        }).then(async result => {
+            if (result.isConfirmed) await changeStatus(id)
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
 </script>
 
 <style>
 @import 'datatables.net-bs5';
+</style>
+
+<style lang="scss">
+.pagination-rounded {
+    .page-link {
+        border-radius: 30px !important;
+        margin: 0 3px !important;
+        border: none;
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        text-align: center;
+        line-height: 32px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
 </style>

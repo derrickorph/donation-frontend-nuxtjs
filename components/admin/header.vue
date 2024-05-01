@@ -1,129 +1,73 @@
 <template>
-  <!-- ========== Topbar Start ========== -->
-  <div class="navbar-custom">
-    <div class="topbar container-fluid">
-      <div class="d-flex align-items-center gap-lg-2 gap-1">
-        <!-- Topbar Brand Logo -->
-        <div class="logo-topbar">
-          <!-- Logo light -->
-          <a href="index.html" class="logo-light">
-            <span class="logo-lg">
-              <img src="/assets/images/logo.png" alt="logo" />
-            </span>
-            <span class="logo-sm">
-              <img src="/assets/images/logo-sm.png" alt="small logo" />
-            </span>
-          </a>
+  <div class="header">
+    <!-- navbar -->
+    <nav class="navbar-default navbar navbar-expand-lg">
+      <a id="nav-toggle" href="#">
+        <i class="fe fe-menu"></i>
+      </a>
 
-          <!-- Logo Dark -->
-          <a href="index.html" class="logo-dark">
-            <span class="logo-lg">
-              <img src="/assets/images/logo-dark.png" alt="dark logo" />
-            </span>
-            <span class="logo-sm">
-              <img src="/assets/images/logo-dark-sm.png" alt="small logo" />
-            </span>
-          </a>
-        </div>
+      <!--Navbar nav -->
+      <div class="ms-auto d-flex">
+        <a href="#" class="form-check form-switch theme-switch btn btn-light btn-icon rounded-circle ">
+          <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+          <label class="form-check-label" for="flexSwitchCheckDefault"></label>
 
-        <!-- Sidebar Menu Toggle Button -->
-        <button class="button-toggle-menu">
-          <i class="mdi mdi-menu"></i>
-        </button>
+        </a>
+        <ul class="navbar-nav navbar-right-wrap ms-2 d-flex nav-top-wrap">
 
-        <!-- Horizontal Menu Toggle Button -->
-        <button
-          class="navbar-toggle"
-          data-bs-toggle="collapse"
-          data-bs-target="#topnav-menu-content"
-        >
-          <div class="lines">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        </button>
-      </div>
+          <!-- List -->
+          <li class="dropdown ms-2">
+            <a class="rounded-circle" href="#" role="button" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="avatar avatar-md avatar-indicators avatar-online">
+                <img alt="avatar" src="/assets/images/avatar.png" class="rounded-circle">
+              </div>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
+              <div class="dropdown-item">
+                <div class="d-flex">
+                  <div class="avatar avatar-md avatar-indicators avatar-online">
+                    <img alt="avatar" src="/assets/images/avatar.png" class="rounded-circle">
+                  </div>
+                  <div class="ms-3 lh-1">
+                    <h5 class="mb-1">{{ auth.getUser.username }}</h5>
+                    <p class="mb-0 text-muted">{{ auth.getUser.email }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="dropdown-divider"></div>
+              <ul class="list-unstyled">
 
-      <ul class="topbar-menu d-flex align-items-center gap-3">
-        <li class="d-none d-sm-inline-block">
-          <div
-            class="nav-link"
-            id="light-dark-mode"
-            data-bs-toggle="tooltip"
-            data-bs-placement="left"
-            title="Theme Mode"
-          >
-            <i class="ri-moon-line font-22"></i>
-          </div>
-        </li>
+                <li>
+                  <NuxtLink class="dropdown-item" to="/dashboard/profile">
+                    <i class="fe fe-user me-2"></i> Profile
+                  </NuxtLink>
+                </li>
 
-        <li class="d-none d-md-inline-block">
-          <a class="nav-link" href="#" data-toggle="fullscreen">
-            <i class="ri-fullscreen-line font-22"></i>
-          </a>
-        </li>
 
-        <li class="dropdown">
-          <a
-            class="nav-link dropdown-toggle arrow-none nav-user px-2"
-            data-bs-toggle="dropdown"
-            href="#"
-            role="button"
-            aria-haspopup="false"
-            aria-expanded="false"
-          >
-            <span class="account-user-avatar">
-              <img
-                src="/assets/images/users/avatar-1.jpg"
-                alt="user-image"
-                width="32"
-                class="rounded-circle"
-              />
-            </span>
-            <span class="d-lg-flex flex-column gap-1 d-none">
-              <h5 class="my-0">Dev Derrick</h5>
-              <h6 class="my-0 fw-normal">Admin</h6>
-            </span>
-          </a>
-          <div
-            class="dropdown-menu dropdown-menu-end dropdown-menu-animated profile-dropdown"
-          >
-            <!-- item-->
-            <div class="dropdown-header noti-title">
-              <h6 class="text-overflow m-0">Welcome !</h6>
+              </ul>
+              <div class="dropdown-divider"></div>
+              <ul class="list-unstyled">
+                <li>
+                  <a class="dropdown-item" @click.prevent="logout" href="#">
+                    <i class="fe fe-power me-2"></i> Sign Out
+                  </a>
+                </li>
+              </ul>
             </div>
-
-            <!-- item-->
-            <a href="javascript:void(0);" class="dropdown-item">
-              <i class="mdi mdi-account-circle me-1"></i>
-              <span>My Account</span>
-            </a>
-
-            <!-- item-->
-            <a href="javascript:void(0);" class="dropdown-item">
-              <i class="mdi mdi-account-edit me-1"></i>
-              <span>Settings</span>
-            </a>
-
-            <!-- item-->
-            <a href="javascript:void(0);" class="dropdown-item">
-              <i class="mdi mdi-logout me-1"></i>
-              <span>Logout</span>
-            </a>
-          </div>
-        </li>
-      </ul>
-    </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
   </div>
-  <!-- ========== Topbar End ========== -->
 </template>
+
 <script setup>
-  const init = () => {
-    var n = this
-    console.log('jjjj');
-  };
-onMounted(() => {
-  init();
-});
+const auth = useAuthStore();
+const logout = async () => {
+  try {
+    await auth.logout()
+  } catch (error) {
+    console.log(error);
+  }
+}
 </script>

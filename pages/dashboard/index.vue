@@ -1,82 +1,98 @@
 <template>
-    <!-- Start Content-->
-    <div class="container-fluid">
-
+    <section class="container-fluid p-4">
         <div class="row">
-            <div class="col-12">
-                <div class="page-title-box">
-                    <h4 class="page-title">Dashboard</h4>
+            <div class="col-lg-12 col-md-12 col-12">
+                <div class="border-bottom pb-3 mb-3 d-lg-flex justify-content-between align-items-center">
+                    <div class="mb-3 mb-lg-0">
+                        <h1 class="mb-0 h2 fw-bold">Dashboard</h1>
+                    </div>
+                    
+
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
-                <div class="card widget-inline">
-                    <div class="card-body p-0">
-                        <div class="row g-0">
-                            <div class="col-sm-6 col-lg-3">
-                                <div class="card rounded-0 shadow-none m-0">
-                                    <div class="card-body text-center">
-                                        <i class="ri-group-line text-success  font-24"></i>
-                                        <h3><span>29</span></h3>
-                                        <p class="text-muted font-15 mb-0">Users</p>
-                                    </div>
-                                </div>
+            <div class="col-xl-3 col-lg-6 col-md-12 col-12">
+                <!-- Card -->
+                <div class="card mb-4">
+                    <!-- Card body -->
+                    <div class=" card-body">
+                        <span class="fs-6 text-uppercase fw-semibold">Users</span>
+                        <div class="mt-2 d-flex justify-content-between align-items-center">
+                            <div class="lh-1">
+                                <h2 class="h1 fw-bold mb-1">2,000</h2>
                             </div>
-
-                            <div class="col-sm-6 col-lg-3">
-                                <div class="card rounded-0 shadow-none m-0 border-start border-light">
-                                    <div class="card-body text-center">
-                                        <i class="ri-list-check-2 text-muted font-24"></i>
-                                        <h3><span>715</span></h3>
-                                        <p class="text-muted font-15 mb-0">Total Donation</p>
-                                    </div>
-                                </div>
+                            <div>
+                                <span class="bg-light-success icon-shape icon-xl rounded-3 text-dark-success"><i class="mdi mdi-account-multiple mdi-24px"></i></span>
                             </div>
-
-                            <div class="col-sm-6 col-lg-3">
-                                <div class="card rounded-0 shadow-none m-0 border-start border-light">
-                                    <div class="card-body text-center">
-                                        <i class="ri-group-line text-danger  font-24"></i>
-                                        <h3><span>31</span></h3>
-                                        <p class="text-muted font-15 mb-0">Users blocked</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 col-lg-3">
-                                <div class="card rounded-0 shadow-none m-0 border-start border-light">
-                                    <div class="card-body text-center">
-                                        <i class="ri-line-chart-line text-muted font-24"></i>
-                                        <h3><span>93</span> </h3>
-                                        <p class="text-muted font-15 mb-0">Productivity</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div> <!-- end row -->
+                        </div>
                     </div>
-                </div> <!-- end card-box-->
-            </div> <!-- end col-->
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-12 col-12">
+                <!-- Card -->
+                <div class="card mb-4">
+                    <!-- Card Body -->
+                    <div class=" card-body">
+                        <span class="fs-6 text-uppercase fw-semibold">Total Donation</span>
+                        <div class="mt-2 d-flex justify-content-between align-items-center">
+                            <div class="lh-1">
+                                <h2 class="h1 fw-bold mb-1">367</h2>
+                            </div>
+                            <div>
+                                <span class="bg-light-primary icon-shape icon-xl rounded-3 text-dark-primary"><i class="mdi  mdi-currency-usd mdi-24px"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-12 col-12">
+                <!-- Card -->
+                <div class="card mb-4">
+                    <!-- Card Body -->
+                    <div class=" card-body">
+                        <span class="fs-6 text-uppercase fw-semibold">Users blocked</span>
+                        <div class="mt-2 d-flex justify-content-between align-items-center">
+                            <div class="lh-1">
+                                <h2 class="h1 fw-bold mb-1">13,234</h2>
+                            </div>
+                            <div>
+                                <span class="bg-light-danger icon-shape icon-xl rounded-3 text-dark-danger"><i class="mdi mdi-account-multiple mdi-24px"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-12 col-12">
+                <!-- Card -->
+                <div class="card mb-4">
+                    <!-- Card Body -->
+                    <div class=" card-body">
+                        <span class="fs-6 text-uppercase fw-semibold">Total ID Number</span>
+                        <div class="mt-2 d-flex justify-content-between align-items-center">
+                            <div class="lh-1">
+                                <h2 class="h1 fw-bold mb-1">120</h2>
+                            </div>
+                            <div>
+                                <span class="bg-light-info icon-shape icon-xl rounded-3 text-dark-info"><i class="mdi mdi-numeric mdi-24px"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-
-    </div>
-    <!-- container -->
 </template>
 
 <script setup>
+useHead({
+    title: "KYD | Dashboard"
+})
 
 definePageMeta({
     layout: 'admin',
-    head() {
-        return {
-            script: [
-                {
-                    src: '/assets/js/app.min.js'
-                }
-            ]
-        }
-    }, 
+    middleware: ['auth']
 })
+
 </script>

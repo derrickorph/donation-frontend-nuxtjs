@@ -10,5 +10,9 @@
     </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
+onMounted(() => {
+    if (localStorage.theme) document.documentElement.setAttribute("data-theme", localStorage.theme);
+
+})
 </script>

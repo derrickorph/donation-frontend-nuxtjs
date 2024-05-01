@@ -10,13 +10,26 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@pinia/nuxt": "^0.5.1",
+    "@vee-validate/nuxt": "^4.12.6",
+    "@vee-validate/rules": "^4.12.6",
     "datatables.net-bs5": "^2.0.5",
     "datatables.net-dt": "^2.0.5",
     "datatables.net-vue3": "^3.0.1",
+    "i": "^0.3.7",
     "nuxt": "^3.11.2",
     "path": "^0.12.7",
+    "pinia": "^2.1.7",
+    "sweetalert2": "^11.10.8",
     "swiper": "^11.1.1",
+    "vee-validate": "^4.12.6",
     "vue": "^3.4.21",
-    "vue-router": "^4.3.0"
+    "vue-router": "^4.3.0",
+    "vue-toastification": "^2.0.0-rc.5",
+    "yup": "^1.4.0"
+  },
+  "devDependencies": {
+    "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
+    "sass": "^1.75.0"
   }
 }

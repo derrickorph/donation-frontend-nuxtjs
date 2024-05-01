@@ -9,16 +9,17 @@
                     <div class="card shadow ">
                         <!-- Card body -->
                         <div class="card-body p-6">
-                            <div class="mb-4">
+                            <div class="mb-4 text-center">
                                 <NuxtLink to="/"><img src="/assets/images/logo-192x192.png" width="60" class="mb-4" alt="logo-icon"></NuxtLink>
-                                <h1 class="mb-1 fw-bold">Login in</h1>
+                                <h1 class="mb-1 fw-bold">Log in</h1>
                             </div>
                             <!-- Form -->
-                            <form>
+                            <Form @submit="onSubmit" :validation-schema="schema">
                                 <!-- Username -->
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
-                                    <input type="email" id="email" class="form-control" name="email" placeholder="Email address here" required>
+                                    <Field type="email" id="email" class="form-control" name="email" placeholder="Email address here" />
+                                    <ErrorMessage name="email" class="error-message" />
                                 </div>
                                 <!-- Password -->
                                 <div class="mb-3">
@@ -29,14 +30,11 @@
                                             <NuxtLink to="/forget-password" class="text-sm text-danger text-decoration-none ">Forgot your password?</NuxtLink>
                                         </div>
                                     </label>
-                     
-                                    <input type="password" id="password" class="form-control" name="password" placeholder="**************" required>
+
+                                    <Field type="password" id="password" class="form-control " name="password" placeholder="**************" />
+                                    <ErrorMessage name="password" class="error-message" />
                                 </div>
-                                <!-- Checkbox -->
-                                <div class="d-lg-flex justify-content-between align-items-center mb-4">
-                                    <div>
-                                    </div>
-                                </div>
+
                                 <div>
                                     <!-- Button -->
                                     <div class="d-grid">
@@ -49,7 +47,7 @@
                                     <span>Don’t have an account? <NuxtLink to="/register" class="ms-1">Register</NuxtLink></span>
 
                                 </div>
-                            </form>
+                            </Form>
                         </div>
                     </div>
                 </div>
@@ -57,3 +55,31 @@
         </section>
     </main>
 </template>
+<script setup>
+import { Field, Form, ErrorMessage } from 'vee-validate';
+import useAlertNotification from '../services/notification'
+import * as yup from 'yup';
+const { errorSweetAlert } = useAlertNotification()
+useHead({
+    title: "KYD | Log In"
+})
+definePageMeta({
+    middleware: ['guest']
+})
+const schema = yup.object({
+    email: yup.string().required().email().label('Email'),
+    password: yup.string().required().min(8).label('Password'),
+})
+const auth = useAuthStore();
+const token = useTokenStore();
+const errors = ref([])
+
+const onSubmit = async (values) => {
+    try {
+        await auth.login(values)
+    } catch (error) {
+        errorSweetAlert('Ooops! Error', error.data.detail)
+    }
+}
+
+</script>

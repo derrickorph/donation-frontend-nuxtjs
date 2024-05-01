@@ -1,85 +1,57 @@
 <template>
-    <!-- ========== Left Sidebar Start ========== -->
-    <div class="leftside-menu">
-
-        <!-- Brand Logo Light -->
-        <NuxtLink to="/dashboard" class="logo mb-2 logo-light">
-            <h3>Ikamvelihle</h3>
-        </NuxtLink>
-        <!-- <NuxtLink to="/dashboard" class="logo logo-light">
-            <span class="logo-lg">
-                <img src="/assets/images/logo.png" alt="logo">
-            </span>
-            <span class="logo-sm">
-                <img src="/assets/images/logo-sm.png" alt="small logo">
-            </span>
-        </NuxtLink> -->
-
-        <!-- Brand Logo Dark -->
-        <NuxtLink to="/dashboard" class="logo logo-dark">
-            <span class="logo-lg">
-                <img src="/assets/images/logo-dark.png" alt="dark logo">
-            </span>
-            <span class="logo-sm">
-                <img src="/assets/images/logo-dark-sm.png" alt="small logo">
-            </span>
-        </NuxtLink>
-
-        <!-- Sidebar Hover Menu Toggle Button -->
-        <div class="button-sm-hover" data-bs-toggle="tooltip" data-bs-placement="right" title="Show Full Sidebar">
-            <i class="ri-checkbox-blank-circle-line align-middle"></i>
-        </div>
-
-        <!-- Full Sidebar Menu Close Button -->
-        <div class="button-close-fullsidebar">
-            <i class="ri-close-fill align-middle"></i>
-        </div>
-
-        <!-- Sidebar -left -->
-        <div class="h-100" id="leftside-menu-container" data-simplebar>
-            <!-- Leftbar User -->
-            <div class="leftbar-user">
-                <a href="pages-profile.html">
-                    <img src="/assets/images/users/avatar-1.jpg" alt="user-image" height="42" class="rounded-circle shadow-sm">
-                    <span class="leftbar-user-name mt-2">Dominic Keller</span>
-                </a>
-            </div>
-
-            <!--- Sidemenu -->
-            <ul class="side-nav">
-
-
-                <li class="side-nav-item">
-                    <NuxtLink to="/dashboard" class="side-nav-link">
-                        <i class="uil-home-alt"></i>
-                        <span> Dashboard </span>
+    <nav class="navbar-vertical navbar">
+        <div class="vh-100" data-simplebar>
+            <!-- Brand logo -->
+            <NuxtLink class="navbar-brand" to="/">
+                <img src="/assets/images/logo-192x192.png" alt="">
+                <span class="text-white h3 ms-2">KYD</span>
+            </NuxtLink>
+            <!-- Navbar nav -->
+            <ul class="navbar-nav flex-column" id="sideNavbar">
+                <li class="nav-item" @click="closeDropdown('close')">
+                    <NuxtLink class="nav-link " to="/dashboard" exactActiveClass="active">
+                        <i class="nav-icon fe fe-home me-2"></i> Dashboard
                     </NuxtLink>
                 </li>
-
-
-                <li class="side-nav-item">
-                    <a data-bs-toggle="collapse" href="#sidebarUsers" aria-expanded="false" aria-controls="sidebarUsers" class="side-nav-link">
-                        <i class="uil-user"></i>
-                        <span> User administration </span>
-                        <span class="menu-arrow"></span>
+                <li class="nav-item" @click="closeDropdown('close')">
+                    <NuxtLink class="nav-link " to="/dashboard/activity" exactActiveClass="active">
+                        <i class="nav-icon fe fe-activity me-2"></i> Activity
+                    </NuxtLink>
+                </li>
+                <li class="nav-item" v-if="auth.getUser.is_superuser">
+                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#navUserManagement" aria-expanded="false" aria-controls="navUserManagement">
+                        <i class="nav-icon fe fe-users me-2"></i> User administration
                     </a>
-                    <div class="collapse" id="sidebarUsers">
-                        <ul class="side-nav-second-level">
-                            <li>
-                                <NuxtLink to="/dashboard/users-list">Users list</NuxtLink>
+                    <div id="navUserManagement" :class="currentRoute === '/dashboard/users-list' || currentRoute === '/dashboard/blocked-users-list' ?'collapse show':'collapse'" data-bs-parent="#sideNavbar">
+                        <ul class="nav flex-column">
+                            <li class="nav-item ">
+                                <NuxtLink class="nav-link" exactActiveClass="active" to="/dashboard/users-list">Users list</NuxtLink>
                             </li>
-                            <li>
-                                <NuxtLink to="/dashboard/blocked-users-list">Blocked users list</NuxtLink>
+                            <!-- Nav item -->
+                            <li class="nav-item ">
+                                <NuxtLink class="nav-link" exactActiveClass="active" to="/dashboard/blocked-users-list">Blocked users list</NuxtLink>
                             </li>
                         </ul>
                     </div>
                 </li>
+                <li class="nav-item" @click="closeDropdown('close')" v-if="auth.getUser.is_superuser">
+                    <NuxtLink class="nav-link " to="/dashboard/manage-id-numbers" exactActiveClass="active">
+                        <i class="nav-icon mdi mdi-numeric me-2"></i> Manage ID Number
+                    </NuxtLink>
+                </li>
 
             </ul>
-            <!--- End Sidemenu -->
 
-            <div class="clearfix"></div>
         </div>
-    </div>
-    <!-- ========== Left Sidebar End ========== -->
+    </nav>
 </template>
+<script setup>
+const route = useRoute()
+const auth = useAuthStore();
+const currentRoute = route.path
+const closeDropdown = (className) =>{
+   if(className==='close') $('.collapse').removeClass('show')
+}
+
+</script>
+
