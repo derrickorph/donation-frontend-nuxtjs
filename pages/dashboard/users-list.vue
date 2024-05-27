@@ -74,7 +74,7 @@ useHead({
 })
 definePageMeta({
     layout: 'admin',
-    middleware: ['auth']
+    middleware: ['auth', 'is-super-admin']
 })
 
 const { users, loader, userProcess, getListeUsers, changeStatus  } = useUsers()

@@ -34,7 +34,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(user, index) in users" :key="index">
+                                <tr v-for="(user, index) in usersBlocked" :key="index">
                                     <td>{{ index + 1 }}</td>
                                     <td>{{ user.username }}</td>
                                     <td>{{ user.surname }}</td>
@@ -75,10 +75,10 @@ useHead({
 
 definePageMeta({
     layout: 'admin',
-    middleware: ['auth']
+    middleware: ['auth', 'is-super-admin']
 })
 
-const { users, loader, userProcess, getListeBlockedUsers, changeStatus } = useUsers()
+const { usersBlocked, loader, getListeBlockedUsers, changeStatus } = useUsers()
 DataTable.use(DataTablesCore);
 
 onMounted(async () => {

@@ -1,5 +1,7 @@
 /* eslint-disable import/no-cycle */
 
+import useAlertNotification from "./notification"
+
 export default function useIdNumbers() {
 
   const idNumber = ref([])
@@ -11,6 +13,7 @@ export default function useIdNumbers() {
   const API_URL = 'http://127.0.0.1:8000/api'
   const token = useTokenStore();
   const auth = useAuthStore();
+  const { errorSweetAlert } = useAlertNotification();
 
   const getListeIdNumbers = async () => {
     try {
@@ -29,13 +32,19 @@ export default function useIdNumbers() {
   const createIdNumber = async (data: any) => {
     try {
       loader.value = true
+      idNumberSuccess.value = false
       await $fetch(`${API_URL}/id_numbers`, { method: "POST", body: { ...data }, headers: { Authorization: `Bearer ${token.getToken}` } });
+      idNumberSuccess.value = true
       loader.value = false
       getListeIdNumbers();
     } catch (error:any) {
+      idNumberSuccess.value = false
+      
       if (error.response.hasOwnProperty("_data")) {
         const isInvalidToken = error.response._data.code === "token_not_valid";
         if (isInvalidToken) auth.logout();
+        errorSweetAlert("Oups! Error", error.response._data.detail);
+
       }
       
       loader.value = false

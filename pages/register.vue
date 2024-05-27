@@ -110,7 +110,13 @@
 <script setup>
 import { Field, Form, ErrorMessage, defineRule } from 'vee-validate';
 import * as yup from 'yup';
-
+import { configure } from 'vee-validate';
+configure({
+    validateOnBlur: true, // controls if `blur` events should trigger validation with `handleChange` handler
+    validateOnChange: true, // controls if `change` events should trigger validation with `handleChange` handler
+    validateOnInput: false, // controls if `input` events should trigger validation with `handleChange` handler
+    validateOnModelUpdate: true, // controls if `update:modelValue` events should trigger validation with `handleChange` handler
+});
 useHead({
     title: "KYD | Registration"
 })
@@ -120,14 +126,14 @@ definePageMeta({
 import useAlertNotification from '../services/notification'
 const { errorSweetAlert } = useAlertNotification()
 const auth = useAuthStore();
-const schema = yup.object({
+const schema = yup.object().shape({
     email: yup.string().required().email().label('Email'),
     username: yup.string().required().label('Username'),
     surname: yup.string().required().label('Surname'),
-    phoneNumber: yup.string().required().label('Phone number'),
+    phoneNumber: yup.number(10).required().positive().integer().label('Phone number'),
     bank: yup.string().required().label('Bank name'),
     acc: yup.string().required().label('Bank account number'),
-    id_number: yup.string().required().label('ID number'),
+    id_number: yup.number().required().positive().integer().label('ID number'),
     password: yup.string().required().min(8).label('Password'),
     passwordConfirmation: yup
         .string()

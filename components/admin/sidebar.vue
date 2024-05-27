@@ -9,7 +9,7 @@
             <!-- Navbar nav -->
             <ul class="navbar-nav flex-column" id="sideNavbar">
                 <li class="nav-item" @click="closeDropdown('close')">
-                    <NuxtLink class="nav-link " to="/dashboard" exactActiveClass="active">
+                    <NuxtLink v-if="auth.getUser.is_superuser" class="nav-link " to="/dashboard" exactActiveClass="active">
                         <i class="nav-icon fe fe-home me-2"></i> Dashboard
                     </NuxtLink>
                 </li>

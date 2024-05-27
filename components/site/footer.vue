@@ -20,26 +20,25 @@
                 <div class="offset-lg-1 col-lg-2 col-md-3 col-6">
                     <div class="mb-4">
                         <!-- list -->
-                        <h3 class="fw-bold mb-3">Company</h3>
+                        <h3 class="fw-bold mb-3">Home</h3>
                         <ul class="list-unstyled nav nav-footer flex-column nav-x-0">
-                            <li><a href="#" class="nav-link">About</a></li>
-                            <li><a href="#" class="nav-link">Pricing</a></li>
-                            <li><a href="#" class="nav-link">Blog</a></li>
-                            <li><a href="#" class="nav-link">Careers</a></li>
-                            <li><a href="#" class="nav-link">Contact</a></li>
+                            <li><a href="#" class="nav-link">Introduction</a></li>
+                            <li><a href="#" class="nav-link">Our vision</a></li>
+                            <li><a href="#" class="nav-link">Join us</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-3 col-6">
                     <div class="mb-4">
                         <!-- list -->
-                        <h3 class="fw-bold mb-3">Support</h3>
+                        <h3 class="fw-bold mb-3">Menu</h3>
                         <ul class="list-unstyled nav nav-footer flex-column nav-x-0">
-                            <li><a href="#" class="nav-link">Help and Support</a></li>
-                            <li><a href="#" class="nav-link">Become Instructor</a></li>
-                            <li><a href="#" class="nav-link">Get the app</a></li>
-                            <li><a href="#" class="nav-link">FAQ’s</a></li>
-                            <li><a href="#" class="nav-link">Tutorial</a></li>
+                            <li><a href="#" class="nav-link">Home</a></li>
+                            <li><a href="#" class="nav-link">About Us</a></li>
+                            <li><a href="#" class="nav-link">Projects</a></li>
+                            <li><a href="#" class="nav-link">Jobs</a></li>
+                            <li><a href="#" class="nav-link">Objectives</a></li>
+                            <li><a href="#" class="nav-link">Donations</a></li>
                         </ul>
 
                     </div>
@@ -49,7 +48,7 @@
                     <div class="mb-4">
                         <h3 class="fw-bold mb-3">Get in touch</h3>
                         <p>339 McDermott Points Hettingerhaven, NV 15283</p>
-                        <p class="mb-1">Email: <a href="#">support@geeksui.com</a></p>
+                        <p class="mb-1">Email: <a href="#">support@iyd.com</a></p>
                         <p>Phone: <span class="text-dark fw-semibold">(000) 123 456 789</span></p>
 
                     </div>

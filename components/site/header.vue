@@ -8,7 +8,7 @@
 
                     <NuxtLink to="/login" v-if="!tokenStore.getStatus" class="btn btn-sm btn-outline-primary ">Sign in</NuxtLink>
                     <NuxtLink to="/register" v-if="!tokenStore.getStatus" class="btn btn-sm btn-outline-secondary  d-md-block mx-1">Sign up</NuxtLink>
-                    <NuxtLink to="/dashboard" v-if="tokenStore.getStatus" class="btn btn-sm btn-primary  d-md-block">Dashboard</NuxtLink>
+                    <NuxtLink :to="auth.getUser.is_superuser ? '/dashboard' :'/dashboard/activity'" v-if="tokenStore.getStatus" class="btn btn-sm btn-primary  d-md-block">Dashboard</NuxtLink>
                 </div>
                 <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="icon-bar top-bar mt-0"></span>
@@ -50,6 +50,7 @@
 </template>
 <script setup>
 const tokenStore = useTokenStore();
+const auth = useAuthStore();
 
 
 </script>

@@ -66,6 +66,8 @@ export const useAuthStore = defineStore('auth', {
                 id: data.user.id,
                 is_superuser: data.user.is_superuser,
             };
+            if (!data.user.is_superuser) return navigateTo("/dashboard/activity");
+
             return navigateTo("/dashboard");
         }
     },

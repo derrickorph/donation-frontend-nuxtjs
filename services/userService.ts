@@ -6,7 +6,9 @@ export default function useUsers() {
   const loader = ref(false)
   const userProcess = ref(false)
   const user_donations = ref([])
+  const donations = ref([])
   const users = ref([])
+  const usersBlocked = ref([])
   const errors = ref('')
   const API_URL = 'http://127.0.0.1:8000/api'
   const token = useTokenStore();
@@ -14,10 +16,38 @@ export default function useUsers() {
 
 
   // Liste des Users
+  const donationsReceived = async () => {
+    try {
+      loader.value = true
+      const response: any = await $fetch(`${API_URL}/donation_received`, { method: "GET", headers: { Authorization: `Bearer ${token.getToken}` } });
+      loader.value = false
+      donations.value = response;
+    } catch (error:any) {
+      if (error.response.hasOwnProperty("_data")) {
+        const isInvalidToken = error.response._data.code === "token_not_valid";
+        if(isInvalidToken) auth.logout();
+      }
+      loader.value = false
+    }
+  }
   const getListeUsers = async () => {
     try {
       loader.value = true
       const response: any = await $fetch(`${API_URL}/users`, { method: "GET", headers: { Authorization: `Bearer ${token.getToken}` }});
+      loader.value = false
+      users.value = response
+    } catch (error:any) {
+      if (error.response.hasOwnProperty("_data")) {
+        const isInvalidToken = error.response._data.code === "token_not_valid";
+        if(isInvalidToken) auth.logout();
+      }
+      loader.value = false
+    }
+  }
+  const getListeUsersActivity = async () => {
+    try {
+      loader.value = true
+      const response: any = await $fetch(`${API_URL}/users-list`, { method: "GET", headers: { Authorization: `Bearer ${token.getToken}` }});
       loader.value = false
       users.value = response
     } catch (error:any) {
@@ -34,7 +64,7 @@ export default function useUsers() {
       const response: any = await $fetch(`${API_URL}/blocked-users`, { method: "GET", headers: { Authorization: `Bearer ${token.getToken}` } });
       loader.value = false;
 
-      users.value = response;
+      usersBlocked.value = response;
     } catch (error:any) {
       if (error.response.hasOwnProperty("_data")) {
         const isInvalidToken = error.response._data.code === "token_not_valid";
@@ -63,8 +93,23 @@ export default function useUsers() {
       loader.value = true;
       const response: any = await $fetch(`${API_URL}/user/${id}/change-status`, { method: "PATCH", body: {}, headers: { Authorization: `Bearer ${token.getToken}` } });
       loader.value = false;
-      if (!response.data.is_active)  getListeUsers();
-      else getListeBlockedUsers()
+      if (!response.data.is_active) await  getListeUsers();
+      else await getListeBlockedUsers()
+    } catch (error:any) {
+      if (error.response.hasOwnProperty("_data")) {
+        const isInvalidToken = error.response._data.code === "token_not_valid";
+        if (isInvalidToken) auth.logout();
+      }
+      loader.value = false;
+    }
+  };
+  const donate = async (id:any) => {
+    try {
+      loader.value = true;
+      await $fetch(`${API_URL}/user/${id}/donate`, { method: "PATCH", body: {}, headers: { Authorization: `Bearer ${token.getToken}` } });
+      loader.value = false;
+      await getListeUsersActivity();
+      await getUserDonations(id);
     } catch (error:any) {
       if (error.response.hasOwnProperty("_data")) {
         const isInvalidToken = error.response._data.code === "token_not_valid";
@@ -83,7 +128,12 @@ export default function useUsers() {
     getListeUsers,
     changeStatus,
     getListeBlockedUsers,
+    getListeUsersActivity,
+    usersBlocked,
     getUserDonations,
+    donate,
+    donationsReceived,
+    donations,
     user_donations,
   };
 }

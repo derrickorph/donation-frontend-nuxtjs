@@ -88,9 +88,9 @@
 
   definePageMeta({
     layout: "admin",
-    middleware: ["auth"],
+    middleware: ["auth", 'is-super-admin'],
   });
-  const { idNumbers, loader, createIdNumber, getListeIdNumbers, deleteIdNumber } = useIdNumbers()
+const { idNumbers, idNumberSuccess, loader, createIdNumber, getListeIdNumbers, deleteIdNumber } = useIdNumbers()
   DataTable.use(DataTablesCore);
   
   onMounted(async() => {
@@ -114,8 +114,8 @@
     },
   };
 
-  const schema = yup.object({
-    number: yup.string().required().label("ID Number"),
+  const schema = yup.object().shape({
+    number: yup.number().required().positive().integer().label("ID Number"),
   });
   const formValues = ref()
   const form = ref(null); 
@@ -129,11 +129,12 @@
   }
   const onSubmit = async (values, { resetForm }) => {
     try {
-      await createIdNumber(values)
-      resetForm()
-      $('#idNumberModal').modal('toggle');
+       await createIdNumber(values)
+      if (idNumberSuccess.value) {
+        resetForm()
+        $('#idNumberModal').modal('toggle');
+       }
     } catch (error) {
-      console.log(error);
     }
   };
   const deleteItem = async (id) => {
